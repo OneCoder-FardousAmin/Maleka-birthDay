@@ -1,0 +1,1330 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>عيد ميلاد سعيد مليكة محمد صلاح 🎂 | إهداء فردوس أمين</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Cairo & Bubblegum Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Fredoka:wght@500;700&display=swap" rel="stylesheet">
+    <!-- Three.js for 3D Cake -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- OrbitControls for camera interaction -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <!-- Canvas Confetti Library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        * {
+            font-family: 'Cairo', sans-serif;
+            user-select: none;
+        }
+
+        /* Scratch-like block styling */
+        .scratch-block {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 16px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 700;
+            font-size: 0.95rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+            margin-bottom: 4px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+            border: 1px solid rgba(0,0,0,0.15);
+        }
+
+        .scratch-block:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.25);
+        }
+
+        /* Scratch Block Colors */
+        .block-event { background-color: #FFBF00; color: #4A3B00; } /* Events */
+        .block-looks { background-color: #9966FF; } /* Looks */
+        .block-sound { background-color: #CF63CF; } /* Sound */
+        .block-motion { background-color: #4C97FF; } /* Motion */
+        .block-control { background-color: #FFAB19; } /* Control */
+        .block-sensing { background-color: #5CB1D6; } /* Sensing */
+        .block-variable { background-color: #FF8C1A; } /* Variables */
+        .block-custom { background-color: #FF6680; } /* Custom / Trainer */
+
+        .scratch-input {
+            background-color: white;
+            color: #333;
+            padding: 2px 10px;
+            border-radius: 12px;
+            margin: 0 6px;
+            font-weight: bold;
+            display: inline-block;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .scratch-dropdown {
+            background-color: rgba(0,0,0,0.15);
+            padding: 2px 8px;
+            border-radius: 8px;
+            margin: 0 4px;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #ff69b4;
+            border-radius: 10px;
+        }
+
+        /* Pulse Glowing Effect */
+        .glow-effect {
+            animation: glow 2s infinite alternate;
+        }
+        @keyframes glow {
+            0% { box-shadow: 0 0 10px #ff69b4, 0 0 20px #ff69b4; }
+            100% { box-shadow: 0 0 20px #ff1493, 0 0 35px #ff1493; }
+        }
+
+        /* Sparkle Animation */
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0.5) rotate(0deg); }
+            50% { opacity: 1; transform: scale(1.2) rotate(180deg); }
+        }
+        .sparkle-icon {
+            animation: sparkle 2s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-pink-100 via-purple-100 to-indigo-100 min-h-screen flex flex-col overflow-x-hidden">
+
+    <!-- Top Header Navigation bar styled with OneCoder-Fardous Amin -->
+    <header class="bg-purple-700 text-white px-4 py-2 flex items-center justify-between shadow-md z-20">
+        <div class="flex items-center space-x-3 space-x-reverse">
+            <!-- Brand Logo Icon -->
+            <div class="bg-amber-400 p-2 rounded-lg font-black text-xl tracking-wider text-purple-900 flex items-center gap-1.5 shadow">
+                <i class="fa-solid fa-code"></i> OneCoder-Fardous Amin
+            </div>
+            <span class="text-xs bg-purple-800 px-3 py-1 rounded-full border border-purple-400 hidden sm:inline-block">
+                إصدار الذكاء الاصطناعي والبرمجة 🚀
+            </span>
+        </div>
+
+        <!-- Scratch Controls (Green Flag & Stop Sign) -->
+        <div class="flex items-center space-x-4 space-x-reverse bg-purple-900/60 px-4 py-1.5 rounded-full border border-purple-500/40">
+            <button id="greenFlagBtn" title="تشغيل الألعاب النارية والموسيقى" class="text-green-400 hover:text-green-300 transform hover:scale-125 transition active:scale-95 text-2xl">
+                <i class="fa-solid fa-flag"></i>
+            </button>
+            <button id="stopBtn" title="إيقاف" class="text-red-500 hover:text-red-400 transform hover:scale-125 transition active:scale-95 text-xl">
+                <i class="fa-solid fa-octagon-xmark"></i>
+            </button>
+            <div class="h-5 w-px bg-purple-500 mx-2"></div>
+            <button id="soundToggleBtn" class="text-amber-300 hover:text-amber-200 text-lg flex items-center gap-1">
+                <i class="fa-solid fa-music"></i>
+                <span class="text-xs font-bold hidden md:inline">عزف عيد الميلاد</span>
+            </button>
+        </div>
+
+        <!-- Trainer Badge Header -->
+        <div class="text-xs sm:text-sm font-semibold bg-gradient-to-r from-pink-600 to-purple-600 px-3 py-1.5 rounded-lg border border-yellow-300 shadow flex items-center gap-2">
+            <i class="fa-solid fa-graduation-cap text-yellow-300 text-base"></i>
+            <span>المبرمجة / فردوس أمين (سفيرة الذكاء الاصطناعي)</span>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 grid grid-cols-1 lg:grid-cols-12 gap-4 p-3 md:p-6 max-w-7xl mx-auto w-full">
+        
+        <!-- RIGHT COLUMN: 3D Birthday Cake Interactive Canvas (7 cols on LG) -->
+        <section class="lg:col-span-7 bg-white/80 backdrop-blur-md rounded-2xl shadow-xl p-4 border-2 border-pink-200 flex flex-col relative overflow-hidden">
+            <!-- Title & Greeting Header -->
+            <div class="flex justify-between items-center mb-2 z-10">
+                <div>
+                    <h1 class="text-2xl md:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-pink-600 via-purple-600 to-indigo-600 flex items-center gap-2">
+                        <span>Happy Birthday, Malika!</span>
+                        <span class="bg-gradient-to-r from-amber-300 to-yellow-400 text-purple-950 text-xs px-3 py-1 rounded-full border border-yellow-400 font-black shadow-md animate-bounce flex items-center gap-1">
+                            <i class="fa-solid fa-crown text-amber-700"></i> مليكة
+                        </span>
+                    </h1>
+                    <p class="text-sm font-bold text-pink-600 flex items-center gap-1 mt-0.5">
+                        <i class="fa-solid fa-sparkles text-amber-400"></i>
+                        <span>عيد ميلاد سعيد يا أجمل مليكة محمد صلاح ✨</span>
+                    </p>
+                </div>
+                <button id="blowCandlesBtn" class="bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-bold text-xs md:text-sm px-4 py-2 rounded-xl shadow-lg transform hover:scale-105 transition flex items-center gap-2">
+                    <i class="fa-solid fa-wind text-yellow-300"></i>
+                    <span>إطفاء الشموع 🕯️</span>
+                </button>
+            </div>
+
+            <!-- 3D Canvas Viewport -->
+            <div class="relative flex-1 min-h-[350px] md:min-h-[450px] w-full rounded-xl bg-gradient-to-b from-indigo-950 via-purple-900 to-pink-950 shadow-inner overflow-hidden flex items-center justify-center">
+                
+                <!-- Instruction overlay inside Canvas -->
+                <div class="absolute top-3 right-3 bg-black/50 text-white text-xs px-3 py-1.5 rounded-full backdrop-blur-sm z-10 pointer-events-none flex items-center gap-1.5 border border-white/20">
+                    <i class="fa-solid fa-hand-pointer text-pink-400 animate-bounce"></i>
+                    <span>اسحبي الماوس لتدوير التورتة 3D أو انقري على الشموع!</span>
+                </div>
+
+                <!-- Floating Malika Banner Overlay when Mega Party clicked -->
+                <div id="malikaMegaBanner" class="absolute inset-x-0 top-1/2 -translate-y-1/2 pointer-events-none flex flex-col items-center justify-center z-30 transition-all duration-500 opacity-0 scale-50">
+                    <div class="bg-gradient-to-r from-pink-600 via-purple-600 to-pink-600 text-yellow-300 font-black text-2xl md:text-4xl px-8 py-4 rounded-3xl border-4 border-yellow-300 shadow-2xl flex items-center gap-3 transform rotate-[-2deg] animate-bounce">
+                        <i class="fa-solid fa-crown text-amber-300 text-3xl md:text-5xl"></i>
+                        <span>✨ مليكة محمد صلاح ✨</span>
+                        <i class="fa-solid fa-heart text-pink-300 text-3xl md:text-5xl"></i>
+                    </div>
+                    <div class="text-white text-lg md:text-xl font-bold bg-black/60 px-6 py-1.5 rounded-full mt-3 backdrop-blur-md shadow-lg border border-white/30">
+                        🎈 عيد ميلاد سعيد يا أجمل مليكة 🎈
+                    </div>
+                </div>
+
+                <!-- Balloon Compliment Pop Toast Overlay -->
+                <div id="balloonToast" class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none z-40 opacity-0 transition-all duration-300 transform scale-50">
+                    <div class="bg-gradient-to-r from-amber-400 via-pink-500 to-purple-600 text-yellow-200 font-black text-xl md:text-3xl px-8 py-4 rounded-3xl border-4 border-yellow-300 shadow-2xl flex items-center gap-3 animate-bounce">
+                        <i class="fa-solid fa-sparkles text-yellow-300"></i>
+                        <span id="balloonToastText">أحلى كوكى 🍪✨</span>
+                        <i class="fa-solid fa-heart text-pink-200"></i>
+                    </div>
+                </div>
+
+                <!-- Three.js Canvas Container -->
+                <div id="canvas3dContainer" class="w-full h-full cursor-grab active:cursor-grabbing"></div>
+
+                <!-- Floating Balloons Effect Layer -->
+                <div id="balloonOverlay" class="absolute inset-0 pointer-events-none overflow-hidden"></div>
+            </div>
+
+            <!-- Interactive Cake Control Bar below canvas -->
+            <div class="mt-3 flex flex-wrap gap-2 justify-between items-center bg-purple-50/80 p-2.5 rounded-xl border border-purple-200 text-xs md:text-sm">
+                <div class="flex items-center gap-2 text-purple-800 font-bold">
+                    <i class="fa-solid fa-wand-magic-sparkles text-pink-500 text-base"></i>
+                    <span>حالة التورتة: <span id="cakeStatusText" class="text-pink-600">الشموع مضاءة 🌟</span></span>
+                </div>
+                <div class="flex gap-2 flex-wrap">
+                    <button id="megaPartyBtn" class="bg-gradient-to-r from-pink-500 via-purple-600 to-indigo-600 hover:from-pink-600 hover:to-indigo-700 text-white font-black px-3.5 py-1.5 rounded-lg shadow-md hover:scale-105 active:scale-95 transition flex items-center gap-1.5 animate-pulse">
+                        <i class="fa-solid fa-balloon text-yellow-300"></i>
+                        <span>مضاعفة البلالين والاحتفال 🎈💥</span>
+                    </button>
+                    <button id="rotateToggleBtn" class="bg-white hover:bg-purple-100 text-purple-700 font-bold px-3 py-1.5 rounded-lg border border-purple-300 shadow-sm transition">
+                        <i class="fa-solid fa-rotate"></i> تدوير تلقائي
+                    </button>
+                    <button id="sparkleBtn" class="bg-amber-400 hover:bg-amber-500 text-purple-900 font-bold px-3 py-1.5 rounded-lg shadow-sm transition">
+                        <i class="fa-solid fa-star"></i> شرارات سحرية
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- LEFT COLUMN: Scratch Workspace Code Greeting (5 cols on LG) -->
+        <section class="lg:col-span-5 flex flex-col space-y-3">
+            
+            <!-- Programmer / Trainer Gift Card -->
+            <div id="trainerGiftCard" class="bg-gradient-to-r from-purple-800 via-pink-600 to-indigo-800 rounded-2xl p-4 text-white shadow-xl border-2 border-yellow-300 relative overflow-hidden glow-effect transition transform hover:scale-[1.02]">
+                <div class="absolute -left-4 -bottom-4 w-24 h-24 bg-yellow-300/20 rounded-full blur-xl pointer-events-none"></div>
+                <div class="flex items-start gap-3 relative z-10">
+                    <div class="bg-gradient-to-br from-amber-300 to-yellow-500 text-purple-950 p-3 rounded-2xl shadow-lg text-3xl font-black shrink-0 animate-bounce">
+                        <i class="fa-solid fa-gift"></i>
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex justify-between items-center">
+                            <span class="text-[10px] font-black uppercase bg-yellow-300 text-purple-950 px-2.5 py-0.5 rounded-full shadow">إهداء وهدية خاصة 🎁</span>
+                            <span class="text-[10px] bg-purple-900/80 text-yellow-200 px-2 py-0.5 rounded border border-yellow-300/40 font-mono">OneCoder-Fardous Amin</span>
+                        </div>
+                        <h2 class="text-xl font-black text-yellow-300 mt-1 leading-tight">المبرمجة / فردوس أمين</h2>
+                        <p class="text-xs text-purple-100 font-bold mt-0.5">مدربة البرمجة والذكاء الاصطناعي للأطفال والناشئين 🤖✨</p>
+                        
+                        <!-- Trainer Credentials Badges -->
+                        <div class="flex flex-wrap gap-1.5 mt-2 text-[11px] font-extrabold">
+                            <span class="bg-purple-950/80 text-amber-200 px-2.5 py-0.5 rounded-md border border-amber-300/40 flex items-center gap-1 shadow-sm">
+                                <i class="fa-solid fa-award text-yellow-400"></i> سفيرة الذكاء الاصطناعي
+                            </span>
+                            <span class="bg-purple-950/80 text-pink-200 px-2.5 py-0.5 rounded-md border border-pink-300/40 flex items-center gap-1 shadow-sm">
+                                <i class="fa-solid fa-code text-cyan-300"></i> مطورة البرمجيات
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scratch Code Workspace Box -->
+            <div class="bg-slate-100 rounded-2xl p-4 shadow-xl border-2 border-slate-300 flex-1 flex flex-col">
+                <div class="flex justify-between items-center mb-3 pb-2 border-b border-slate-300">
+                    <div class="flex items-center gap-2 font-bold text-slate-700">
+                        <i class="fa-solid fa-puzzle-piece text-amber-500 text-lg"></i>
+                        <span>كود التهنئة البرمجي (Scratch Blocks)</span>
+                    </div>
+                    <span class="text-xs bg-slate-200 text-slate-600 px-2 py-1 rounded font-mono">onecoder.sb3</span>
+                </div>
+
+                <!-- Scratch Blocks Stack Container -->
+                <div class="space-y-2 overflow-y-auto max-h-[480px] p-2 bg-slate-200/50 rounded-xl border border-slate-300/80">
+                    
+                    <!-- Event Block -->
+                    <div class="scratch-block block-event w-full flex items-center justify-between">
+                        <div class="flex items-center">
+                            <span>عند النقر على</span>
+                            <span class="bg-white text-green-600 rounded-full px-2 py-0.5 mx-1.5 shadow text-sm">
+                                <i class="fa-solid fa-flag"></i>
+                            </span>
+                        </div>
+                        <i class="fa-solid fa-play text-xs opacity-70"></i>
+                    </div>
+
+                    <!-- Inner Indented Script Box -->
+                    <div class="pr-4 border-r-4 border-amber-400 space-y-2 my-1">
+                        
+                        <!-- Sound Block -->
+                        <div class="scratch-block block-sound w-full">
+                            <span>شغّل صوت</span>
+                            <span class="scratch-dropdown">
+                                <i class="fa-solid fa-music text-xs"></i> أغنية عيد الميلاد
+                            </span>
+                            <span>حتى انتهاء العزف 🎵</span>
+                        </div>
+
+                        <!-- Custom Block: Name Greeting -->
+                        <div class="scratch-block block-looks w-full">
+                            <span>قل</span>
+                            <span class="scratch-input text-pink-600 font-black">
+                                ✨ عيد ميلاد سعيد يا مليكة! ✨
+                            </span>
+                            <span>لمدة</span>
+                            <span class="scratch-input">3</span>
+                            <span>ثانية</span>
+                        </div>
+
+                        <!-- Variable Set Block -->
+                        <div class="scratch-block block-variable w-full">
+                            <span>اجعل متغيّر</span>
+                            <span class="scratch-dropdown">مستوى السعادة 💖</span>
+                            <span>مساوياً لـ</span>
+                            <span class="scratch-input text-purple-700 font-black">∞ (ما لا نهاية)</span>
+                        </div>
+
+                        <!-- Motion / AI Future Block -->
+                        <div class="scratch-block block-motion w-full">
+                            <span>تحرك</span>
+                            <span class="scratch-input">100</span>
+                            <span>خطوة نحو المستقبل والذكاء الاصطناعي 🚀</span>
+                        </div>
+
+                        <!-- Loop Block -->
+                        <div class="scratch-block block-control w-full">
+                            <span>كرر</span>
+                            <span class="scratch-input">1000</span>
+                            <span>مرة: [ وزّع الفرح والألعاب النارية 🎉 ]</span>
+                        </div>
+
+                        <!-- Trainer Signature Block -->
+                        <div class="scratch-block block-custom w-full glow-effect border-2 border-yellow-300">
+                            <i class="fa-solid fa-heart text-yellow-300 ml-1.5"></i>
+                            <span>إهداء وهدية غالية من:</span>
+                            <span class="scratch-input text-purple-900 font-extrabold bg-yellow-300">
+                                المبرمجة فردوس أمين (OneCoder) 🚀
+                            </span>
+                        </div>
+
+                    </div>
+
+                    <!-- Sensing Block End -->
+                    <div class="scratch-block block-sensing w-full">
+                        <span>انتظر حتى</span>
+                        <span class="scratch-dropdown">تتحقق كل أحلام مليكة 🌟</span>
+                    </div>
+
+                </div>
+
+                <!-- Footer Scratch Interactive Buttons -->
+                <div class="mt-4 pt-3 border-t border-slate-300 flex justify-between items-center text-xs text-slate-500 font-bold">
+                    <span class="flex items-center gap-1">
+                        <i class="fa-solid fa-laptop-code text-purple-600"></i>
+                        تمت البرمجة بواسطة OneCoder
+                    </span>
+                    <button id="runScriptBtn" class="bg-gradient-to-r from-amber-400 to-orange-500 hover:from-amber-500 hover:to-orange-600 text-purple-950 px-4 py-2 rounded-xl font-black shadow transform hover:scale-105 transition flex items-center gap-1.5">
+                        <i class="fa-solid fa-play"></i>
+                        <span>تشغيل الكود 🚀</span>
+                    </button>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Celebration Pop-up Modal -->
+    <div id="wishModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-gradient-to-b from-white to-pink-50 rounded-3xl max-w-md w-full p-6 text-center shadow-2xl border-4 border-pink-300 transform scale-90 transition-transform duration-300 relative overflow-hidden">
+            <!-- Modal Sparkle Accents -->
+            <div class="absolute -top-10 -right-10 w-32 h-32 bg-pink-300/30 rounded-full blur-2xl"></div>
+            
+            <div class="text-5xl mb-3 animate-bounce">🎂✨</div>
+            <h3 class="text-2xl font-black text-purple-900 mb-1">كل سنة وأنتِ طيبة يا مليكة!</h3>
+            <p class="text-sm font-bold text-pink-600 mb-4">Malika Mohamed Salah</p>
+
+            <div class="bg-gradient-to-br from-purple-900 to-pink-900 p-4 rounded-2xl border-2 border-amber-300 text-amber-100 text-sm font-semibold mb-5 leading-relaxed text-right shadow-xl">
+                <div class="flex items-center gap-2 mb-2 pb-2 border-b border-amber-400/30 font-black text-yellow-300 text-sm">
+                    <i class="fa-solid fa-gift text-yellow-300 text-lg animate-bounce"></i>
+                    <span>هدية وإهداء خاص من مدربتك:</span>
+                </div>
+                <p class="text-white font-black text-base">
+                    ✨ <b>المبرمجة / فردوس أمين (OneCoder)</b> ✨
+                </p>
+                <p class="text-xs text-pink-200 font-bold mb-2">
+                    مدربة البرمجة والذكاء الاصطناعي للأطفال والناشئين<br>
+                    <span class="text-amber-300 font-extrabold">👑 سفيرة الذكاء الاصطناعي | مطورة البرمجيات 💻</span>
+                </p>
+                <div class="bg-black/30 p-3 rounded-xl border border-white/10 text-xs text-purple-100 mt-2 space-y-1">
+                    <p>🌟 إلى البنوتة المبدعة الجميلة <b>مليكة</b>،</p>
+                    <p>أتمنى لكِ عاماً سعيداً تتألقين فيه دائماً كـ <b>"أحلى كوكى"</b>، <b>"أجمل بنوتة"</b>، و<b>"أشطر مبرمجة"</b> في عالم التكنولوجيا! 💖🚀</p>
+                </div>
+            </div>
+
+            <button id="closeModalBtn" class="w-full bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-extrabold py-3 rounded-2xl shadow-lg transform hover:scale-105 transition">
+                بدء الألعاب النارية والاحتفال! 🎉
+            </button>
+        </div>
+    </div>
+
+    <script>
+        /* -------------------------------------------------------------
+           1. Enhanced Synthesizer Audio Engine (Web Audio API)
+           ------------------------------------------------------------- */
+        let audioCtx = null;
+        let isPlayingAudio = false;
+        let audioTimer = null;
+
+        // Accurate "Happy Birthday" sheet music notes (Freq in Hz, duration in sec, rest after in sec)
+        const birthdayNotes = [
+            // Line 1: Happy Birthday to You
+            { freq: 261.63, duration: 0.35, pause: 0.05 }, // Hap-
+            { freq: 261.63, duration: 0.25, pause: 0.05 }, // py
+            { freq: 293.66, duration: 0.55, pause: 0.05 }, // birth-
+            { freq: 261.63, duration: 0.55, pause: 0.05 }, // day
+            { freq: 349.23, duration: 0.55, pause: 0.05 }, // to
+            { freq: 329.63, duration: 0.95, pause: 0.15 }, // you
+
+            // Line 2: Happy Birthday to You
+            { freq: 261.63, duration: 0.35, pause: 0.05 }, // Hap-
+            { freq: 261.63, duration: 0.25, pause: 0.05 }, // py
+            { freq: 293.66, duration: 0.55, pause: 0.05 }, // birth-
+            { freq: 261.63, duration: 0.55, pause: 0.05 }, // day
+            { freq: 392.00, duration: 0.55, pause: 0.05 }, // to
+            { freq: 349.23, duration: 0.95, pause: 0.15 }, // you
+
+            // Line 3: Happy Birthday Dear Malika
+            { freq: 261.63, duration: 0.35, pause: 0.05 }, // Hap-
+            { freq: 261.63, duration: 0.25, pause: 0.05 }, // py
+            { freq: 523.25, duration: 0.55, pause: 0.05 }, // birth-
+            { freq: 440.00, duration: 0.55, pause: 0.05 }, // day
+            { freq: 349.23, duration: 0.55, pause: 0.05 }, // Dear
+            { freq: 329.63, duration: 0.55, pause: 0.05 }, // Ma-
+            { freq: 293.66, duration: 0.95, pause: 0.15 }, // lika!
+
+            // Line 4: Happy Birthday to You!
+            { freq: 466.16, duration: 0.35, pause: 0.05 }, // Hap-
+            { freq: 466.16, duration: 0.25, pause: 0.05 }, // py
+            { freq: 440.00, duration: 0.55, pause: 0.05 }, // birth-
+            { freq: 349.23, duration: 0.55, pause: 0.05 }, // day
+            { freq: 392.00, duration: 0.55, pause: 0.05 }, // to
+            { freq: 349.23, duration: 1.25, pause: 0.30 }  // YOU!
+        ];
+
+        // Musical Chords for Polyphonic Harmony
+        const chordProgression = [
+            [130.81, 164.81, 196.00], // C Major
+            [130.81, 164.81, 196.00], // C Major
+            [130.81, 174.61, 220.00], // F Major
+            [146.83, 196.00, 246.94], // G Major
+            [130.81, 164.81, 196.00]  // C Major
+        ];
+
+        function initAudioContext() {
+            if (!audioCtx) {
+                const AudioCtx = window.AudioContext || window.webkitAudioContext;
+                audioCtx = new AudioCtx();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }
+
+        // Music Box Chime Tone Synthesizer
+        function playChimeNote(freq, duration) {
+            if (!audioCtx) return;
+            try {
+                const now = audioCtx.currentTime;
+
+                // Main Fundamental Oscillator (Sine for warmth)
+                const osc1 = audioCtx.createOscillator();
+                osc1.type = 'sine';
+                osc1.frequency.setValueAtTime(freq, now);
+
+                // Harmonic Overtone (Triangle for bright chime)
+                const osc2 = audioCtx.createOscillator();
+                osc2.type = 'triangle';
+                osc2.frequency.setValueAtTime(freq * 2, now); // Octave higher
+
+                // Sub Octave Sparkle
+                const osc3 = audioCtx.createOscillator();
+                osc3.type = 'sine';
+                osc3.frequency.setValueAtTime(freq * 3, now); // Harmonic
+
+                // Gain Envelope (ADSR - Bell/Celesta Attack and Decay)
+                const gain = audioCtx.createGain();
+                gain.gain.setValueAtTime(0.0001, now);
+                gain.gain.linearRampToValueAtTime(0.22, now + 0.03); // Quick crisp attack
+                gain.gain.exponentialRampToValueAtTime(0.0001, now + duration + 0.2); // Smooth bell tail decay
+
+                // Connect nodes
+                osc1.connect(gain);
+                osc2.connect(gain);
+                osc3.connect(gain);
+
+                // Master Gain
+                gain.connect(audioCtx.destination);
+
+                osc1.start(now);
+                osc2.start(now);
+                osc3.start(now);
+
+                osc1.stop(now + duration + 0.25);
+                osc2.stop(now + duration + 0.25);
+                osc3.stop(now + duration + 0.25);
+            } catch (e) {
+                console.error("Audio error:", e);
+            }
+        }
+
+        // Soft Polyphonic Chord Accompaniment
+        function playChord(notes, duration) {
+            if (!audioCtx) return;
+            notes.forEach(freq => {
+                try {
+                    const now = audioCtx.currentTime;
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(freq, now);
+
+                    gain.gain.setValueAtTime(0.0001, now);
+                    gain.gain.linearRampToValueAtTime(0.04, now + 0.08);
+                    gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+
+                    osc.start(now);
+                    osc.stop(now + duration);
+                } catch (e) {}
+            });
+        }
+
+        function updateSoundButtonUI(playing) {
+            const btn = document.getElementById('soundToggleBtn');
+            if (!btn) return;
+            if (playing) {
+                btn.innerHTML = `<i class="fa-solid fa-volume-high text-green-400 animate-bounce"></i> <span class="text-xs font-bold text-green-300 hidden md:inline">جاري العزف 🎵</span>`;
+                btn.classList.add('animate-pulse');
+            } else {
+                btn.innerHTML = `<i class="fa-solid fa-music"></i> <span class="text-xs font-bold hidden md:inline">عزف عيد الميلاد</span>`;
+                btn.classList.remove('animate-pulse');
+            }
+        }
+
+        function playBirthdayMelody() {
+            initAudioContext();
+            stopBirthdayMelody();
+            isPlayingAudio = true;
+            updateSoundButtonUI(true);
+
+            let noteIndex = 0;
+
+            function nextNote() {
+                if (!isPlayingAudio) return;
+
+                const note = birthdayNotes[noteIndex];
+                playChimeNote(note.freq, note.duration);
+
+                // Play bass chord harmony every 6 notes
+                if (noteIndex % 6 === 0) {
+                    const chord = chordProgression[Math.floor(noteIndex / 6) % chordProgression.length];
+                    playChord(chord, 1.8);
+                }
+
+                noteIndex = (noteIndex + 1) % birthdayNotes.length;
+
+                const nextDelay = (note.duration + note.pause) * 1000;
+                audioTimer = setTimeout(nextNote, nextDelay);
+            }
+
+            nextNote();
+        }
+
+        function stopBirthdayMelody() {
+            isPlayingAudio = false;
+            updateSoundButtonUI(false);
+            if (audioTimer) {
+                clearTimeout(audioTimer);
+                audioTimer = null;
+            }
+        }
+
+        /* -------------------------------------------------------------
+           2. Three.js 3D Birthday Cake Setup
+           ------------------------------------------------------------- */
+        let scene, camera, renderer, controls;
+        let cakeGroup = new THREE.Group();
+        let candles = [];
+        let candleFlames = [];
+        let flameLights = [];
+        let balloonObjects = [];
+        let isCandlesLit = true;
+        let autoRotateCake = true;
+
+        function init3DCake() {
+            const container = document.getElementById('canvas3dContainer');
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+
+            // Scene
+            scene = new THREE.Scene();
+
+            // Camera
+            camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
+            camera.position.set(0, 8, 18);
+
+            // Renderer
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(width, height);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            renderer.shadowMap.enabled = true;
+            renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+            container.appendChild(renderer.domElement);
+
+            // Orbit Controls
+            controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.05;
+            controls.maxPolarAngle = Math.PI / 2 + 0.1; // Don't go far below ground
+            controls.minDistance = 8;
+            controls.maxDistance = 30;
+
+            // Lighting
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+            scene.add(ambientLight);
+
+            const dirLight = new THREE.DirectionalLight(0xfff5ea, 0.8);
+            dirLight.position.set(10, 20, 10);
+            dirLight.castShadow = true;
+            dirLight.shadow.mapSize.width = 1024;
+            dirLight.shadow.mapSize.height = 1024;
+            scene.add(dirLight);
+
+            // Point light for soft festive ambient glow
+            const pinkGlow = new THREE.PointLight(0xff69b4, 1, 20);
+            pinkGlow.position.set(0, 5, 0);
+            scene.add(pinkGlow);
+
+            // Build Cake Mesh
+            createCakeMesh();
+
+            scene.add(cakeGroup);
+
+            // Event Listener for Window Resize
+            window.addEventListener('resize', onWindowResize);
+
+            // Candle Raycaster Click Detection
+            renderer.domElement.addEventListener('click', onCanvasClick);
+
+            // Start Animation Loop
+            animate();
+        }
+
+        function createCakeMesh() {
+            // Cake Stand Plate
+            const plateGeo = new THREE.CylinderGeometry(5.2, 4.5, 0.3, 64);
+            const plateMat = new THREE.MeshStandardMaterial({ color: 0xffd700, metalness: 0.8, roughness: 0.2 });
+            const plate = new THREE.Mesh(plateGeo, plateMat);
+            plate.position.y = -0.15;
+            plate.receiveShadow = true;
+            cakeGroup.add(plate);
+
+            const plateStemGeo = new THREE.CylinderGeometry(1.5, 2.5, 1.2, 32);
+            const plateStem = new THREE.Mesh(plateStemGeo, plateMat);
+            plateStem.position.y = -0.9;
+            cakeGroup.add(plateStem);
+
+            // Tier 1 (Bottom) - Soft Pink Frosting
+            const tier1Geo = new THREE.CylinderGeometry(4, 4, 2.2, 64);
+            const tier1Mat = new THREE.MeshStandardMaterial({ color: 0xff80ab, roughness: 0.4 });
+            const tier1 = new THREE.Mesh(tier1Geo, tier1Mat);
+            tier1.position.y = 1.1;
+            tier1.castShadow = true;
+            tier1.receiveShadow = true;
+            cakeGroup.add(tier1);
+
+            // Decorative Cream Pearls around Tier 1 base
+            for (let i = 0; i < 24; i++) {
+                const angle = (i / 24) * Math.PI * 2;
+                const pearlGeo = new THREE.SphereGeometry(0.22, 16, 16);
+                const pearlMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.1 });
+                const pearl = new THREE.Mesh(pearlGeo, pearlMat);
+                pearl.position.set(Math.cos(angle) * 4.05, 0.1, Math.sin(angle) * 4.05);
+                cakeGroup.add(pearl);
+            }
+
+            // Tier 2 (Middle) - Lavender / Purple Frosting
+            const tier2Geo = new THREE.CylinderGeometry(2.8, 2.8, 1.8, 64);
+            const tier2Mat = new THREE.MeshStandardMaterial({ color: 0xba68c8, roughness: 0.4 });
+            const tier2 = new THREE.Mesh(tier2Geo, tier2Mat);
+            tier2.position.y = 3.1;
+            tier2.castShadow = true;
+            tier2.receiveShadow = true;
+            cakeGroup.add(tier2);
+
+            // Cream Drips / Stripes on Tier 2
+            for (let i = 0; i < 16; i++) {
+                const angle = (i / 16) * Math.PI * 2;
+                const pearlGeo = new THREE.SphereGeometry(0.18, 16, 16);
+                const pearlMat = new THREE.MeshStandardMaterial({ color: 0xfff0f5, roughness: 0.2 });
+                const pearl = new THREE.Mesh(pearlGeo, pearlMat);
+                pearl.position.set(Math.cos(angle) * 2.85, 2.2, Math.sin(angle) * 2.85);
+                cakeGroup.add(pearl);
+            }
+
+            // Tier 3 (Top) - Mint Cream / Gold Accents
+            const tier3Geo = new THREE.CylinderGeometry(1.6, 1.6, 1.4, 64);
+            const tier3Mat = new THREE.MeshStandardMaterial({ color: 0xffd1dc, roughness: 0.3 });
+            const tier3 = new THREE.Mesh(tier3Geo, tier3Mat);
+            tier3.position.y = 4.7;
+            tier3.castShadow = true;
+            tier3.receiveShadow = true;
+            cakeGroup.add(tier3);
+
+            // Topper Text Badge (MALIKA) or Decorative Crown Stars
+            createCakeTopper();
+
+            // Add Birthday Candles on Top Tier
+            createCandles();
+
+            // Add Floating 3D Balloons around cake
+            create3DBalloons();
+
+            // Add Wrapped 3D Gift Boxes on table around cake
+            create3DGiftBoxes();
+
+            // Add Prominent Glowing 3D Name Banner for Malika
+            create3DNameBanner();
+        }
+
+        function create3DBalloons() {
+            balloonObjects = [];
+            const balloonColors = [0xff4081, 0xab47bc, 0x29b6f6, 0xffca28, 0xec407a, 0x26a69a, 0xff7043];
+            
+            for (let i = 0; i < 10; i++) {
+                const balloonGroup = new THREE.Group();
+
+                // Stretched sphere balloon body
+                const balloonGeo = new THREE.SphereGeometry(0.65, 24, 24);
+                balloonGeo.scale(1, 1.25, 1);
+                const balloonMat = new THREE.MeshStandardMaterial({
+                    color: balloonColors[i % balloonColors.length],
+                    roughness: 0.2,
+                    metalness: 0.1
+                });
+                const balloonMesh = new THREE.Mesh(balloonGeo, balloonMat);
+                balloonMesh.castShadow = true;
+                balloonGroup.add(balloonMesh);
+
+                // Balloon knot
+                const knotGeo = new THREE.ConeGeometry(0.1, 0.18, 8);
+                const knotMesh = new THREE.Mesh(knotGeo, balloonMat);
+                knotMesh.position.y = -0.82;
+                balloonGroup.add(knotMesh);
+
+                // Balloon String
+                const stringGeo = new THREE.CylinderGeometry(0.01, 0.01, 2.5, 8);
+                const stringMat = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.6 });
+                const stringMesh = new THREE.Mesh(stringGeo, stringMat);
+                stringMesh.position.y = -2.1;
+                balloonGroup.add(stringMesh);
+
+                // Radial positioning floating around cake
+                const angle = (i / 10) * Math.PI * 2;
+                const radius = 6.2 + (i % 3) * 0.8;
+                const baseY = 2.5 + (i % 4) * 1.2;
+
+                balloonGroup.position.set(Math.cos(angle) * radius, baseY, Math.sin(angle) * radius);
+
+                balloonGroup.userData = {
+                    isBalloon: true,
+                    baseY: baseY,
+                    speed: 1.2 + Math.random() * 1.5,
+                    offset: Math.random() * Math.PI * 2,
+                    rotSpeed: (Math.random() - 0.5) * 0.02
+                };
+
+                cakeGroup.add(balloonGroup);
+                balloonObjects.push(balloonGroup);
+            }
+        }
+
+        function create3DGiftBoxes() {
+            const giftGroup = new THREE.Group();
+            const giftColors = [
+                { box: 0xff1744, ribbon: 0xffd700 }, // Red & Gold
+                { box: 0x7c4dff, ribbon: 0x00e676 }, // Purple & Green
+                { box: 0x00b0ff, ribbon: 0xff4081 }, // Blue & Pink
+                { box: 0xffc400, ribbon: 0xd500f9 }, // Yellow & Purple
+                { box: 0xe91e63, ribbon: 0xffeb3b }, // Deep Pink & Yellow
+                { box: 0x00e676, ribbon: 0xff3d00 }  // Mint & Red
+            ];
+
+            for (let i = 0; i < 7; i++) {
+                const gift = new THREE.Group();
+                const colors = giftColors[i % giftColors.length];
+                const size = 0.75 + Math.random() * 0.35;
+
+                // Box geometry
+                const boxGeo = new THREE.BoxGeometry(size, size, size);
+                const boxMat = new THREE.MeshStandardMaterial({ color: colors.box, roughness: 0.3 });
+                const boxMesh = new THREE.Mesh(boxGeo, boxMat);
+                boxMesh.castShadow = true;
+                boxMesh.receiveShadow = true;
+                gift.add(boxMesh);
+
+                // Ribbon Cross
+                const ribMat = new THREE.MeshStandardMaterial({ color: colors.ribbon, roughness: 0.2, metalness: 0.4 });
+                const rib1 = new THREE.Mesh(new THREE.BoxGeometry(size * 1.02, size * 1.02, size * 0.2), ribMat);
+                const rib2 = new THREE.Mesh(new THREE.BoxGeometry(size * 0.2, size * 1.02, size * 1.02), ribMat);
+                gift.add(rib1);
+                gift.add(rib2);
+
+                // Ribbon Bow on Top
+                const bowGeo = new THREE.TorusGeometry(size * 0.18, size * 0.05, 8, 16);
+                const bow1 = new THREE.Mesh(bowGeo, ribMat);
+                bow1.position.y = size / 2 + 0.08;
+                bow1.rotation.x = Math.PI / 2;
+                const bow2 = bow1.clone();
+                bow2.rotation.z = Math.PI / 2;
+                gift.add(bow1);
+                gift.add(bow2);
+
+                // Arrange on the table around the cake stand
+                const angle = (i / 7) * Math.PI * 2 + 0.2;
+                const radius = 4.3 + (i % 2) * 0.5;
+                gift.position.set(Math.cos(angle) * radius, size / 2 - 0.2, Math.sin(angle) * radius);
+                gift.rotation.y = Math.random() * Math.PI;
+
+                giftGroup.add(gift);
+            }
+            cakeGroup.add(giftGroup);
+        }
+
+        function create3DNameBanner() {
+            // High-Resolution Canvas Texture with Glowing Arabic & English Name
+            const canvas = document.createElement('canvas');
+            canvas.width = 1024;
+            canvas.height = 384;
+            const ctx = canvas.getContext('2d');
+
+            // Vibrant Pink to Gold Metallic Gradient
+            const grad = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+            grad.addColorStop(0, '#c2185b');
+            grad.addColorStop(0.5, '#7b1fa2');
+            grad.addColorStop(1, '#e91e63');
+            ctx.fillStyle = grad;
+
+            // Rounded Badge Shape
+            ctx.beginPath();
+            ctx.roundRect(15, 15, canvas.width - 30, canvas.height - 30, 45);
+            ctx.fill();
+
+            // Gold Outer Border
+            ctx.lineWidth = 14;
+            ctx.strokeStyle = '#ffd700';
+            ctx.stroke();
+
+            // White Inner Accent Border
+            ctx.lineWidth = 4;
+            ctx.strokeStyle = '#ffffff';
+            ctx.stroke();
+
+            // Malika Arabic Name Text
+            ctx.fillStyle = '#ffffff';
+            ctx.font = '900 82px Cairo, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.shadowColor = '#ffd700';
+            ctx.shadowBlur = 25;
+            ctx.fillText('👑 مليكة محمد صلاح 👑', canvas.width / 2, canvas.height / 2 - 30);
+
+            // Subtitle English Text
+            ctx.fillStyle = '#ffd700';
+            ctx.font = '700 48px Fredoka, sans-serif';
+            ctx.fillText('✨ Happy Birthday Malika ✨', canvas.width / 2, canvas.height / 2 + 55);
+
+            const texture = new THREE.CanvasTexture(canvas);
+            const plaqueGeo = new THREE.PlaneGeometry(5.8, 2.1);
+            const plaqueMat = new THREE.MeshStandardMaterial({
+                map: texture,
+                transparent: true,
+                roughness: 0.2,
+                metalness: 0.3,
+                side: THREE.DoubleSide
+            });
+
+            const plaqueMesh = new THREE.Mesh(plaqueGeo, plaqueMat);
+            plaqueMesh.position.set(0, 7.8, 0);
+            cakeGroup.add(plaqueMesh);
+
+            // Gold Rod Supports extending into top tier
+            const rodGeo = new THREE.CylinderGeometry(0.04, 0.04, 2.4, 16);
+            const rodMat = new THREE.MeshStandardMaterial({ color: 0xffd700, metalness: 0.9, roughness: 0.1 });
+
+            const rod1 = new THREE.Mesh(rodGeo, rodMat);
+            rod1.position.set(-2.2, 6.5, 0);
+            cakeGroup.add(rod1);
+
+            const rod2 = new THREE.Mesh(rodGeo, rodMat);
+            rod2.position.set(2.2, 6.5, 0);
+            cakeGroup.add(rod2);
+        }
+
+        function createCakeTopper() {
+            // Gold Star Topper Ring
+            const starGeo = new THREE.OctahedronGeometry(0.6, 0);
+            const starMat = new THREE.MeshStandardMaterial({ color: 0xffd700, metalness: 0.9, roughness: 0.1 });
+            const star = new THREE.Mesh(starGeo, starMat);
+            star.position.set(0, 6.6, 0);
+            star.rotation.y = Math.PI / 4;
+            cakeGroup.add(star);
+        }
+
+        function createCandles() {
+            candles = [];
+            candleFlames = [];
+            flameLights = [];
+
+            const candleCount = 5;
+            const radius = 0.9;
+
+            for (let i = 0; i < candleCount; i++) {
+                const angle = (i / candleCount) * Math.PI * 2;
+                const x = Math.cos(angle) * radius;
+                const z = Math.sin(angle) * radius;
+
+                // Candle Body
+                const candleGeo = new THREE.CylinderGeometry(0.08, 0.08, 0.8, 16);
+                const candleMat = new THREE.MeshStandardMaterial({
+                    color: i % 2 === 0 ? 0xff4081 : 0xffeb3b,
+                    roughness: 0.3
+                });
+                const candle = new THREE.Mesh(candleGeo, candleMat);
+                candle.position.set(x, 5.8, z);
+                candle.castShadow = true;
+                candle.name = "candle";
+                cakeGroup.add(candle);
+                candles.push(candle);
+
+                // Candle Wick
+                const wickGeo = new THREE.CylinderGeometry(0.015, 0.015, 0.15, 8);
+                const wickMat = new THREE.MeshBasicMaterial({ color: 0x222222 });
+                const wick = new THREE.Mesh(wickGeo, wickMat);
+                wick.position.set(x, 6.25, z);
+                cakeGroup.add(wick);
+
+                // Candle Flame
+                const flameGeo = new THREE.ConeGeometry(0.12, 0.3, 16);
+                const flameMat = new THREE.MeshBasicMaterial({ color: 0xffa000 });
+                const flame = new THREE.Mesh(flameGeo, flameMat);
+                flame.position.set(x, 6.45, z);
+                cakeGroup.add(flame);
+                candleFlames.push(flame);
+
+                // Flame Light
+                const flameLight = new THREE.PointLight(0xffaa00, 0.8, 3);
+                flameLight.position.set(x, 6.5, z);
+                cakeGroup.add(flameLight);
+                flameLights.push(flameLight);
+            }
+        }
+
+        function toggleCandles(lit) {
+            isCandlesLit = lit;
+            candleFlames.forEach(flame => flame.visible = lit);
+            flameLights.forEach(light => light.intensity = lit ? 0.8 : 0);
+
+            const statusText = document.getElementById('cakeStatusText');
+            if (lit) {
+                statusText.textContent = "الشموع مضاءة 🌟";
+                statusText.className = "text-pink-600";
+            } else {
+                statusText.textContent = "تم إطفاء الشموع! 🎈 (تحققت الأمنية)";
+                statusText.className = "text-purple-600 font-bold";
+                triggerConfetti();
+            }
+        }
+
+        function onCanvasClick(event) {
+            const rect = renderer.domElement.getBoundingClientRect();
+            const mouse = new THREE.Vector2(
+                ((event.clientX - rect.left) / rect.width) * 2 - 1,
+                -((event.clientY - rect.top) / rect.height) * 2 + 1
+            );
+
+            const raycaster = new THREE.Raycaster();
+            raycaster.setFromCamera(mouse, camera);
+
+            const intersects = raycaster.intersectObjects(cakeGroup.children, true);
+            if (intersects.length > 0) {
+                let clickedBalloon = null;
+
+                // Check if clicked object belongs to a balloon group
+                for (let i = 0; i < intersects.length; i++) {
+                    let obj = intersects[i].object;
+                    while (obj && obj !== cakeGroup) {
+                        if (obj.userData && obj.userData.isBalloon) {
+                            clickedBalloon = obj;
+                            break;
+                        }
+                        obj = obj.parent;
+                    }
+                    if (clickedBalloon) break;
+                }
+
+                if (clickedBalloon) {
+                    popBalloonCompliment(clickedBalloon);
+                } else {
+                    toggleCandles(!isCandlesLit);
+                    triggerSparkles();
+                }
+            }
+        }
+
+        function onWindowResize() {
+            const container = document.getElementById('canvas3dContainer');
+            if (!container) return;
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+
+            camera.aspect = width / height;
+            camera.updateProjectionMatrix();
+            renderer.setSize(width, height);
+        }
+
+        let clock = new THREE.Clock();
+
+        function animate() {
+            requestAnimationFrame(animate);
+
+            const elapsedTime = clock.getElapsedTime();
+
+            // Auto Rotate Cake
+            if (autoRotateCake && cakeGroup) {
+                cakeGroup.rotation.y = elapsedTime * 0.3;
+            }
+
+            // Floating 3D Balloons Animation
+            if (balloonObjects && balloonObjects.length > 0) {
+                balloonObjects.forEach(b => {
+                    const time = elapsedTime * b.userData.speed;
+                    b.position.y = b.userData.baseY + Math.sin(time + b.userData.offset) * 0.35;
+                    b.rotation.y += b.userData.rotSpeed;
+                });
+            }
+
+            // Flame Flicker Effect
+            if (isCandlesLit) {
+                candleFlames.forEach((flame, idx) => {
+                    flame.scale.x = 1 + Math.sin(elapsedTime * 10 + idx) * 0.15;
+                    flame.scale.z = flame.scale.x;
+                    flame.scale.y = 1 + Math.cos(elapsedTime * 12 + idx) * 0.2;
+                });
+                flameLights.forEach((light, idx) => {
+                    light.intensity = 0.7 + Math.sin(elapsedTime * 15 + idx) * 0.3;
+                });
+            }
+
+            controls.update();
+            renderer.render(scene, camera);
+        }
+
+        /* -------------------------------------------------------------
+           3. Confetti & Visual FX
+           ------------------------------------------------------------- */
+        function triggerConfetti() {
+            if (typeof confetti === 'function') {
+                // Left & Right Fireworks Burst
+                confetti({
+                    particleCount: 80,
+                    spread: 70,
+                    origin: { y: 0.6, x: 0.2 },
+                    colors: ['#ff4081', '#ffeb3b', '#7c4dff', '#00e676']
+                });
+                confetti({
+                    particleCount: 80,
+                    spread: 70,
+                    origin: { y: 0.6, x: 0.8 },
+                    colors: ['#ff4081', '#ffeb3b', '#7c4dff', '#00e676']
+                });
+            }
+        }
+
+        function triggerSparkles() {
+            if (typeof confetti === 'function') {
+                confetti({
+                    particleCount: 50,
+                    angle: 90,
+                    spread: 360,
+                    startVelocity: 25,
+                    decay: 0.92,
+                    scalar: 1.2,
+                    colors: ['#ffd700', '#ffffff', '#ff80ab']
+                });
+            }
+        }
+
+        function addMoreBalloons(count = 12) {
+            const balloonColors = [0xff4081, 0xab47bc, 0x29b6f6, 0xffca28, 0xec407a, 0x26a69a, 0xff7043, 0xe91e63, 0x00e676, 0xff3d00];
+            
+            for (let i = 0; i < count; i++) {
+                const balloonGroup = new THREE.Group();
+
+                const balloonGeo = new THREE.SphereGeometry(0.65 + Math.random() * 0.2, 24, 24);
+                balloonGeo.scale(1, 1.25, 1);
+                const balloonMat = new THREE.MeshStandardMaterial({
+                    color: balloonColors[Math.floor(Math.random() * balloonColors.length)],
+                    roughness: 0.2,
+                    metalness: 0.1
+                });
+                const balloonMesh = new THREE.Mesh(balloonGeo, balloonMat);
+                balloonMesh.castShadow = true;
+                balloonGroup.add(balloonMesh);
+
+                const knotGeo = new THREE.ConeGeometry(0.1, 0.18, 8);
+                const knotMesh = new THREE.Mesh(knotGeo, balloonMat);
+                knotMesh.position.y = -0.82;
+                balloonGroup.add(knotMesh);
+
+                const stringGeo = new THREE.CylinderGeometry(0.01, 0.01, 2.8, 8);
+                const stringMat = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.7 });
+                const stringMesh = new THREE.Mesh(stringGeo, stringMat);
+                stringMesh.position.y = -2.2;
+                balloonGroup.add(stringMesh);
+
+                const angle = Math.random() * Math.PI * 2;
+                const radius = 4.5 + Math.random() * 5.5;
+                const baseY = 1.5 + Math.random() * 6.5;
+
+                balloonGroup.position.set(Math.cos(angle) * radius, baseY, Math.sin(angle) * radius);
+
+                balloonGroup.userData = {
+                    isBalloon: true,
+                    baseY: baseY,
+                    speed: 1.5 + Math.random() * 2,
+                    offset: Math.random() * Math.PI * 2,
+                    rotSpeed: (Math.random() - 0.5) * 0.04
+                };
+
+                cakeGroup.add(balloonGroup);
+                balloonObjects.push(balloonGroup);
+            }
+        }
+
+        const balloonCompliments = ["أحلى كوكى 🍪✨", "أجمل بنوتة 👸💖", "أشطر مبرمجة 👩‍💻🚀"];
+
+        function popBalloonCompliment(balloonGroup) {
+            // Pick random compliment
+            const randomText = balloonCompliments[Math.floor(Math.random() * balloonCompliments.length)];
+            
+            // Show Toast
+            const toast = document.getElementById('balloonToast');
+            const toastText = document.getElementById('balloonToastText');
+            if (toast && toastText) {
+                toastText.textContent = randomText;
+                toast.classList.remove('opacity-0', 'scale-50');
+                toast.classList.add('opacity-100', 'scale-110');
+
+                setTimeout(() => {
+                    toast.classList.remove('opacity-100', 'scale-110');
+                    toast.classList.add('opacity-0', 'scale-50');
+                }, 1800);
+            }
+
+            // Play Pop Sound Effect via Web Audio API
+            if (audioCtx) {
+                try {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(350, audioCtx.currentTime);
+                    osc.frequency.exponentialRampToValueAtTime(750, audioCtx.currentTime + 0.12);
+                    gain.gain.setValueAtTime(0.25, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.14);
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + 0.14);
+                } catch (e) {}
+            }
+
+            // Trigger Sparkles
+            triggerSparkles();
+
+            // Balloon bounce animation
+            balloonGroup.position.y += 1.5;
+            balloonGroup.scale.set(1.3, 1.3, 1.3);
+            setTimeout(() => {
+                balloonGroup.scale.set(1, 1, 1);
+                if (balloonGroup.userData) {
+                    balloonGroup.position.y = balloonGroup.userData.baseY;
+                }
+            }, 600);
+        }
+
+        function triggerMegaPartyFX() {
+            if (typeof confetti !== 'function') return;
+
+            const duration = 3.5 * 1000;
+            const end = Date.now() + duration;
+
+            (function frame() {
+                confetti({
+                    particleCount: 8,
+                    angle: 60,
+                    spread: 60,
+                    origin: { x: 0 },
+                    colors: ['#ff4081', '#ffd700', '#7c4dff', '#00e676', '#ff9100']
+                });
+                confetti({
+                    particleCount: 8,
+                    angle: 120,
+                    spread: 60,
+                    origin: { x: 1 },
+                    colors: ['#ff4081', '#ffd700', '#7c4dff', '#00e676', '#ff9100']
+                });
+
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            })();
+
+            setTimeout(() => {
+                confetti({
+                    particleCount: 150,
+                    spread: 120,
+                    origin: { y: 0.5 },
+                    colors: ['#ffd700', '#ffffff', '#ff4081', '#00e676']
+                });
+            }, 600);
+        }
+
+        function showMalikaBanner() {
+            const banner = document.getElementById('malikaMegaBanner');
+            if (!banner) return;
+            
+            banner.classList.remove('opacity-0', 'scale-50', 'pointer-events-none');
+            banner.classList.add('opacity-100', 'scale-100');
+
+            setTimeout(() => {
+                banner.classList.add('opacity-0', 'scale-50', 'pointer-events-none');
+                banner.classList.remove('opacity-100', 'scale-100');
+            }, 4500);
+        }
+
+        /* -------------------------------------------------------------
+           4. DOM Interactions & Buttons Setup
+           ------------------------------------------------------------- */
+        window.addEventListener('DOMContentLoaded', () => {
+            // Init Three.js 3D Cake
+            init3DCake();
+
+            // Green Flag Button Click -> Play Music, Extinguish/Light, Fireworks
+            const greenFlagBtn = document.getElementById('greenFlagBtn');
+            const runScriptBtn = document.getElementById('runScriptBtn');
+            const stopBtn = document.getElementById('stopBtn');
+            const blowCandlesBtn = document.getElementById('blowCandlesBtn');
+            const soundToggleBtn = document.getElementById('soundToggleBtn');
+            const rotateToggleBtn = document.getElementById('rotateToggleBtn');
+            const sparkleBtn = document.getElementById('sparkleBtn');
+            const megaPartyBtn = document.getElementById('megaPartyBtn');
+            
+            const wishModal = document.getElementById('wishModal');
+            const closeModalBtn = document.getElementById('closeModalBtn');
+
+            if (megaPartyBtn) {
+                megaPartyBtn.addEventListener('click', () => {
+                    addMoreBalloons(12);
+                    triggerMegaPartyFX();
+                    showMalikaBanner();
+                    if (!isPlayingAudio) playBirthdayMelody();
+                });
+            }
+
+            function startCelebration() {
+                playBirthdayMelody();
+                triggerConfetti();
+                toggleCandles(true);
+                showModal();
+            }
+
+            greenFlagBtn.addEventListener('click', startCelebration);
+            runScriptBtn.addEventListener('click', startCelebration);
+
+            stopBtn.addEventListener('click', () => {
+                stopBirthdayMelody();
+            });
+
+            blowCandlesBtn.addEventListener('click', () => {
+                toggleCandles(!isCandlesLit);
+            });
+
+            soundToggleBtn.addEventListener('click', () => {
+                if (isPlayingAudio) {
+                    stopBirthdayMelody();
+                } else {
+                    playBirthdayMelody();
+                }
+            });
+
+            rotateToggleBtn.addEventListener('click', () => {
+                autoRotateCake = !autoRotateCake;
+                rotateToggleBtn.classList.toggle('bg-purple-200');
+            });
+
+            sparkleBtn.addEventListener('click', () => {
+                triggerSparkles();
+            });
+
+            function showModal() {
+                wishModal.classList.remove('hidden');
+                setTimeout(() => {
+                    wishModal.classList.remove('opacity-0');
+                    wishModal.children[0].classList.remove('scale-90');
+                    wishModal.children[0].classList.add('scale-100');
+                }, 10);
+            }
+
+            closeModalBtn.addEventListener('click', () => {
+                wishModal.classList.add('opacity-0');
+                wishModal.children[0].classList.remove('scale-100');
+                wishModal.children[0].classList.add('scale-90');
+                setTimeout(() => {
+                    wishModal.classList.add('hidden');
+                    triggerConfetti();
+                }, 300);
+            });
+        });
+    </script>
+</body>
+</html>
